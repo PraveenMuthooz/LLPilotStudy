@@ -82,6 +82,4 @@ def toggle_navbar(opened):
      }
      return new_navbar
 
-if __name__ == "__main__":
-     Timer(1, open_browser).start()
-     app.run(debug=False, port=8050)
+server = app.server
