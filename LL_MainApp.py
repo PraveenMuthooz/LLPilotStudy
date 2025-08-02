@@ -82,3 +82,6 @@ def toggle_navbar(opened):
           "collapsed": {"mobile": not opened, "desktop": not opened},
      }
      return new_navbar
+
+if __name__ == "__main__":
+     app.run(debug=False)
