@@ -1,4 +1,4 @@
-dash~=2.14.2
+dash
 pandas~=2.0.3
 geopandas~=1.0.1
 numpy~=1.25.2
