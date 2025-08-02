@@ -2,11 +2,8 @@
     "version": 2,
     "builds": [
         {
-            "src": "app.py",
-            "use": "@vercel/python",
-            "config": {
-               "runtime": "3.11" 
-          }
+            "src": "Dockerfile",
+            "use": "@vercel/docker"
         }
     ],
     "routes": [
