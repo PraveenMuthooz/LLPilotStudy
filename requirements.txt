@@ -19,3 +19,5 @@ dash-mantine-components~=0.12.0
 dash-iconify~=0.1.2
 dash-extensions~=2.0.4
 gunicorn~=21.2.0
+setuptools>=61
+wheel
