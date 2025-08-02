@@ -1,0 +1,44 @@
+Code,ServiceRR,PropertyName,Location,Address,State,Class1Interchanges,Latitude,Longitude
+29,GSWR,LockeFarms,Dawson,"618 W Lee Street, Dawson, GA 39842",GA,"NS,CSX",31.77399758,-84.45685345
+30,GSWR,Texpar,Bainbridge,"Industrial Blvd, Bainbridge, GA 39842",GA,"NS,CSX",30.90792853,-84.60853664
+32,VR,CJB Industries,Valdosta,"701 Hil Harbin Industrial Blvd, Valdosta, GA 31601",GA,"NS,CSX",30.80203493,-83.281429
+33,VR,Georgia Petroleum,Valdosta,"1620 James P. Rodgers Dr,Valdosta, GA 31601",GA,"NS,CSX",30.80287504,-83.27781768
+34,VR,Standlee,Valdosta,"700 Gil Harbin Industrial Blvd, Valdosta, GA 31601",GA,"NS,CSX",30.80660008,-83.26680606
+48,HOG,Lyle Farms,Cobb,"3782 US Highway 280 E, Cobb, GA 31735",GA,"NS,CSX",31.957662,-83.97520916
+49,HOG,Lyle Farms,Cordele,"3465 Old Penia Road, Cordele, GA 31015",GA,"NS,CSX",31.96232455,-83.7263588
+63,GSWR,GSWR Choice Terminal,Bainbridge,"414 4th Ramp, Bainbridge, GA 39817",GA,"NS,CSX",30.91209456,-84.59338159
+177,GC,Global Commodities,Pembroke,"4014 Hwy 280 East, Pembroke, GA 31321",GA,"NS,CSX",32.1305744,-81.55472038
+178,GC,Griffin Industries,Dublin,"Hwy 80, Dublin, GA 31027",GA,"NS,CSX",32.56003695,-82.8205185
+179,GC,McLendon Enterpireses,Elabell,"5585 GA Hwy 204, Ellabell, GA 31308",GA,"NS,CSX",32.13592673,-81.43848337
+180,GC,Meherrin Fertilizer,Claxton,"3298 Hwy 280, Claxton, GA 30417",GA,"NS,CSX",32.14959048,-81.96189324
+186,IMRR,Specialized Rail Transport,Springfield,"1500 North Grand Avenue East, Springfield, IL 62705",IL,"	BNSF,CN,CSX, NS,UP",39.816334,-89.634198
+10,IMRR,Agridyne,Perkins,"1615 South Second Street, Perkins, IL 61554",IL,"	BNSF,CN,KCS, NS,UP",40.55108031,-89.66974957
+40,IMRR,American Milling,Pekin,"1811 American St., Pekin, IL 61554",IL,"	BNSF,CN,CSX, NS,UP",40.5513031,-89.66737398
+188,TPW,Scharf Carri Materials CO,East Peoria,"300 Carver Lane, East Peoria, IL 61611",IL,"	BNSF,CN,CSX, NS,UP",40.67236781,-89.53674813
+60,ISRR,Spectrum Logistics,Evansville,"1 Ossenberg Ln, Evansville, IN 47725",IN,"NS,CSX",38.09347379,-87.55554657
+61,ISRR,First Class Services,Petersburg,"202 W. Illinois St, Petersburg, IN 47567",IN,"NS,CSX",38.48415725,-87.28950028
+187,TPW,Co-Alliance LLP,Reynolds,"500 North Boone, Reynolds, IN 47980",IN,"BNSF,CN,CSX,NS,UP",40.753581,-86.876354
+189,TPW,Smith Transport,Remington,"3507 West US Hwy 24, Remington, IN 47977",IN,"BNSF,CN,CSX,NS,UP",40.76485625,-87.10995851
+190,TPW,Plastic Express,Remington,"3 South Maine Street, Remington, IN 47977",IN,"BNSF,CN,CSX,NS,UP",40.76059284,-87.15357698
+191,TPW,TPW Hoosier Lift,Wolcott,"11864 US 24 West, Wolcott, IN 47995",IN,"BNSF,CN,CSX,NS,UP",40.7654222,-87.094573
+3,IORY,Choice Terminal,Cincinnati,"629 Lunken Park Drive, Cincinnati, OH 45226",OH,"NS,CSX,CN,CFE,WE",39.11374248,-84.41869868
+5,YB,Kenilworth Steel Brier Hill,Girard,"S. State Street, Girard, OH 44420",OH,"NS,CSX",41.14965306,-80.69951677
+12,IORY,Logan Transload,Logan,"201 S Walnut Street, Logan, OH 43138",OH,"NS,CSX,CN",39.5366318,-82.40377383
+56,IORY,Queen City Terminals,Cincinnati,"828 Lee Street, Zanesville, OH 43701",OH,"CSX,NS,UP,BNSF,CN,CP",39.9442598,-82.01714837
+25,CFE,Nelson Packaging,Lima,"1801 Reservoir Rd, Lima, OH 45804",OH,"NS,CSX",40.7440293,-84.07296391
+57,IORY,Wright Distribution,Lima,"2000 N Sugar St, Lima, OH 45801",OH,"NS,CSX",40.7691041,-84.08739683
+58,IORY,Luckey Trucking,Lima,"1750 N Sugar St, Lima, OH 45801",OH,"NS,CSX",40.7640691,-84.08906027
+59,IORY,Superior Carrier,Springfield,"1240 South Burnett Road, Springfield, OH 45505",OH,"NS,CSX",39.91942165,-83.7699433
+80,CUOH,Dyno Nobel North America,Cambridge,"850 Woodlawn Ave, Cambridge, OH 43725",OH,"NS,CSX",40.01499698,-81.58267663
+88,CFE,Van Wert Terminal,Van Wert,"9630 Hoaglin Center Rd, Van Wert, OH 45891",OH,"CSX,NS,UP,BNSF,CN,CP",40.875492,-84.51423145
+14,CUOH,Adams Brothers,Zanesville,"828 Lee Street, Zanesville, OH 43701",OH,"NS,CSX",39.9442598,-82.01714837
+82,CUOH,Yenkin-Majestic,Columbus,"1920 Leonard Avenue, Columbus, OH 43219",OH,"NS,CSX",39.98697201,-82.95190484
+81,CUOH,Mid State Warehouse,Newark,"1984 Coffman Road, Newark, OH 43055",OH,"NS,CSX",40.0378804,-82.46984723
+87,IORY,Troyer Trucking and Warehouse,Lima,"951 Williams St, Lima, OH 45801",OH,"CSX,NS,UP,BNSF,CN,CP",40.76421426,-84.09126284
+89,CIND,Cincinnati Bulk Terminals,Cincinnati,"895 W Mehring Way, Cincinnati, OH 45203",OH,"CSX,NS,UP,BNSF,CN,CP",39.09649251,-84.52970645
+86,IORY,Cincinnati Barge & Rail Terminal,Cincinnati,"1707 Riverside Dr, Cincinnati, OH 45202",OH,"CSX,NS,UP,BNSF,CN,CP",39.11575436,-84.48554789
+90,CIND,Consolidated Grain & Barge,North Bend,"300 Three Rivers Pkwy, North Bend, OH 45052",OH,"CSX,NS,UP,BNSF,CN,CP",39.142008,-84.721582
+91,MVRY,Gateway Terminals,Lowelville,"Lowellville, OH 44436",OH,"NS,CSX",41.0359418,-80.5362257
+92,YARR,Penn Ohio Logistics,Austintown,"3710 Henricks Rd, Austintown, OH 44515",OH,"NS,CSX",41.10884692,-80.71606452
+27,CCKY,Euclid Chemical,Lafayette,"119 S Chattanooga St, Lafayette, GA 30728",GA,NS,34.70331197,-85.28801472
+65,CCKY,Washington Penn,Lafayette,"222 Walker County Industrial Dr, Lafayette, GA 30728",GA,NS,34.7807257,-85.2556644

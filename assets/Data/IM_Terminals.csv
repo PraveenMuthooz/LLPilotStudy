@@ -1,0 +1,89 @@
+Location,State,Address,Service Provider,marker-color,lon,lat
+Fort Lauderdale,FL,"890 SW 21st Avenue Ft. Lauderdale, FL 33312",CSXT,red,-80.16982633,26.10930634
+Tampa,FL,"504 North 34th Street Tampa, FL 33605",CSXT,red,-82.42449244,27.95102415
+Sanford,FL,"2591 West 5th Street Sanford, FL 32771",CSXT,red,-81.293601,28.80734774
+Jacksonville,FL,"3796 Warrington Street Jacksonville, FL 32254",CSXT,red,-81.71906052,30.32676676
+Savannah,GA,"2351 Tremont Road Savannah, GA 31405",CSXT,red,-81.14060897,32.06939951
+Charleston,SC,"1990 Tuxbury Lane North Charleston, SC 29405",CSXT,red,-79.95386027,32.83539839
+Montgomery,AL,"2057 Bell Street Montgomery, AL 36104",CSXT,red,-86.34423027,32.37319196
+New Orleans,LA,"7801 Almonaster Ave. New Orleans, LA 70126",CSXT,red,-89.99527721,30.00945135
+Memphis,TN,"1400 Warford Street Memphis, TN 38108",CSXT,red,-89.9613859,35.17049012
+North Haven,CT,"110 Universal Drive North Haven, CT 06473",CSXT,red,-72.87346748,41.34340632
+Wilmington,DE,"1205 Centerville Road Wilmington, DE 19808",CSXT,red,-75.6160043,39.73136581
+Tampa Port,FL,"2151 Gatx Drive Tampa, FL 33605",CSXT,red,-82.43270845,27.91673674
+Atlanta Tilford,GA,"1592 Marietta Blvd NW Atlanta, GA 30318",CSXT,red,-84.43548475,33.79807094
+Atlanta,GA,"1000 Chattahoochee Avenue N.W. Atlanta, GA 30318",CSXT,red,-84.42024373,33.79908197
+Augusta,GA,"1765 Essie McIntyre Boulevard Augusta, GA 30904",CSXT,red,-82.00325283,33.45852129
+Dalton,GA,"107 McFarland Road Dalton, GA 30720",CSXT,red,-84.96504349,34.73010696
+East Chicago,IN,"1401 West 145th Street East Chicago, IN 46312",CSXT,red,-87.48968967,41.63177221
+Indianapolis,IN,"855 South Emerson Avenue Indianapolis, IN 46203",CSXT,red,-86.08233072,39.75508335
+Louisville,KY,"7550 Grade Lane Louisville, KY 40219",CSXT,red,-85.73870702,38.13941114
+New Orleans,LA,"7801 Almonaster Ave. New Orleans, LA 70126",CSXT,red,-89.9953249,30.00937831
+Maine,ME,"20 Rigby Road South Portland, Maine 04106",CSXT,red,-70.29484492,43.62664339
+Maryland,MD,"1525 Andre Street Baltimore, MD 21230",CSXT,red,-76.59152356,39.26730178
+Westborough,MA,"19 Walkup Drive Westborough, MA 01581",CSXT,red,-71.57893127,42.27147846
+Detroit Central,MI,"177 South Rosa Parks Boulevard Detroit, MI 48216",CSXT,red,-83.11483101,42.35897962
+Grand Rapids,MI,"945 Freeman Avenue S.W. Grand Rapids, MI 49503",CSXT,red,-85.70861928,42.94351368
+Elizabeth,NJ,"454 York Street Elizabeth, NJ 07201",CSXT,red,-74.18678146,40.66149354
+Albany,NY,"1 Exchange Street Albany, NY 12205",CSXT,red,-73.77882803,42.68319028
+Buffalo,NY,"1254 William Street Buffalo, NY 14206",CSXT,red,-78.82487362,42.88591711
+Syracuse,NY,"200 Welch Street East Syracuse, NY 13057",CSXT,red,-76.06901427,43.06266594
+Charlotte West,NC,"6816 CSX Way Charlotte, NC 28214",CSXT,red,-80.92260875,35.27400399
+Charlotte East,NC,"601 North Hoskins Road Charlotte, NC 28216",CSXT,red,-80.878688,35.27331192
+Raleigh,NC,"1090 Capital Boulevard Raleigh, NC 27603",CSXT,red,-78.63971475,35.7955105
+Cincinnati,OH,"3601 Geringer Street Cincinnati, OH 45223",CSXT,red,-84.54464646,39.14681941
+Cleveland Central,OH,"2700 West 3rd Street Cleveland, OH 44113",CSXT,red,-81.6750967,41.47694894
+Cleveland East,OH,"610 East 152nd Street Cleveland, OH 44110",CSXT,red,-81.576999,41.56309568
+Columbus,OH,"3100 Lockbourne Road Columbus, OH 43207",CSXT,red,-82.96558756,39.89447087
+Toledo,OH,"1601 Miami Street Toledo, OH 43605",CSXT,red,-83.53212997,41.6218869
+Butler,PA,"137 Center Avenue Butler, PA 16001",CSXT,red,-79.89142313,40.8565967
+Philadelphia,PA,"3600 Moore Street Philadelphia, PA 19145",CSXT,red,-75.20194469,39.93212296
+Pittsburgh,PA,"200 Courtland Street Pittsburgh, PA 15207",CSXT,red,-79.94624766,40.40449439
+South Carolina,SC,"1990 Tuxbury Lane North Charleston, SC 29405",CSXT,red,-79.953879,32.8353864
+Greenville,SC,"130 Willard Street Greenville, SC 29601",CSXT,red,-82.41774567,34.85591684
+Chattanooga,TN,"520 West 26th Street Chattanooga, TN 37408",CSXT,red,-85.31896278,35.02765141
+Knoxville,TN,"2200 Volunteer Boulevard Knoxville, TN 37916",CSXT,red,-83.93375905,35.94750348
+Nashville,TN,"426 Chestnut Street Nashville, TN 37203",CSXT,red,-86.76885849,36.14417133
+Richmond,VA,"2300 West Laburnum Avenue Richmond, VA 23223",CSXT,red,-77.39619813,37.57767809
+Fairmont,WV,"900 Washington Street Fairmont, WV 26554",CSXT,red,-80.12677377,39.48713425
+Louisville,KY,"4913 Heller St. Louisville, KY 40218",NS,blue,-85.65656321,38.1818867
+Atlanta,GA,"1600 Marietta Road NW, Gate 6, Atlanta, GA 30318",NS,blue,-84.43940854,33.79429554
+Austell,GA,"6000 Dr. Luke Glenn Garrett, Jr. Memorial Highway Austell, GA 30106",NS,blue,-84.65543227,33.82345928
+Ayer,MA,"133 Barnum Road, Ayer, MA 01434",NS,blue,-71.591108,42.54327524
+Bethleham,PA,"2400 Commerce Center Blvd, Bethlehem, PA 18015",NS,blue,-75.33424785,40.60357299
+Albany,NY,"50 Route 67, Mechanicville, NY 12118",NS,blue,-73.7058333,42.91410357
+Buffalo,NY,"500 Bison Parkway, Buffalo, NY 14227-1069",NS,blue,-78.78349,42.89358207
+Chicago-47th,IL,"361 West 47th Street, Chicago, IL 60609",NS,blue,-87.636917,41.80534367
+Chicago-63rd,IL,"169 East 63rd, Chicago, IL 60637",NS,blue,-87.62178927,41.77791167
+Chicago Calumet,IL,"2040 East 106th Street, Chicago, IL 60617",NS,blue,-87.56807027,41.69718268
+Cincinnati,OH,"1276 W 8th Street, Cincinnati, OH 45203",NS,blue,-84.539387,39.10443312
+Charolette,NC,"5710 West Boulevard, Charlotte, NC 28208",NS,blue,-80.95697073,35.19683392
+Columbus,OH,"3329 Thoroughbred Drive, Columbus, OH 43217",NS,blue,-82.95532727,39.79169202
+Croxton,NJ,"125 County Road, Jersey City, NJ 07307",NS,blue,-74.066734,40.75582546
+Charleston,SC,"4350 Goer Drive, N. Charleston, SC 29406",NS,blue,-80.00191527,32.86882403
+Decatur,IL,"3095 E Parkway Drive, Decatur, IL 62526",NS,blue,-88.91199354,39.87081404
+Detroit,MI,"8501 Fort Street, Detroit, MI 48209",NS,blue,-83.12252,42.29857677
+Elizabeth Marine Terminal,NJ,"Port Newark, Elizabeth City Marine Complex, Elizabeth, NJ 07201",NS,blue,-74.206901,40.66002728
+Greensboro,NC,"1105 Merritt Drive, Greensboro, NC 27407",NS,blue,-79.85342127,36.05692022
+GCT Bayonne,NJ,"51 Foot of Colony Rd, Jersey City, NJ 07305",NS,blue,-74.082614,40.68114885
+Savannah,GA,"3 North Main Street, Garden City, GA 31408",NS,blue,-81.16714988,32.11999782
+George Town,KY,"601 Cherry Blossom Way, Georgetown, KY 40324",NS,blue,-84.54524727,38.27190154
+Greer,SC,"100 International Commerce Blvd.,Greer, SC 29651",NS,blue,-82.19805073,34.93313893
+Harrisburg,PA,"3500 Industrial Road, Harrisburg, PA 17110",NS,blue,-76.888873,40.30574555
+Huntsville,AL,"2850 Wall Triana Hwy SW, Huntsville, AL 35824",NS,blue,-86.76013373,34.6412936
+Jacksonville,FL,"6098 Soutel Drive, Jacksonville, FL 32219",NS,blue,-81.73075021,30.36907392
+Chicago Landers,IL,"7540 S. Western Avenue, Chicago, IL 606207540 S. Western Avenue, Chicago, IL 60620",NS,blue,-87.68441054,41.75586466
+Detroit - Livernois,MI,"2725 Livernois Avenue, Detroit, MI 48209",NS,blue,-83.11690626,42.32043604
+Cleveland,OH,"5300 Greenhurst Drive, Maple Heights, OH 44137",NS,blue,-81.57490803,41.41534285
+Morrisville,PA,"98 Cabot Blvd. East, Langhorne, PA 19047",NS,blue,-74.84460146,40.19088273
+Norfolk International,VA,"7737 Hampton Blvd., Norfolk, VA 23505",NS,blue,-76.32559952,36.9200351
+Portsmouth APMT,VA,"2704 Josef Theurer Lane, Chesapeake, VA",NS,blue,-76.26556927,36.80380427
+Pittsburg,PA,"701 Wall Avenue Wall, PA 15148-1463",NS,blue,-79.776753,40.39705951
+Rossville,TN,"3000 Norfolk Southern Way, Rossville, TN 38066-1512",NS,blue,-89.57715978,35.01369745
+Rutherford,PA,"5050 Paxton Street, Harrisburg, PA 17111",NS,blue,-76.79336593,40.25970111
+Cincinnati - Sharonville,OH,"3155 E. Sharon Road, Sharonville, OH 45241",NS,blue,-84.42372622,39.26439367
+St. Louis,MO,"333 East Carrie Avenue, St. Louis, MO 63147",NS,blue,-90.21177123,38.69017659
+Taylor,PA,"P.O. Box 31, One Depot Street, Taylor, PA 18517",NS,blue,-75.71193691,41.3846949
+Toledo,OH,"2101 Hill Avenue, Toledo, OH 43607",NS,blue,-83.59228546,41.63802573
+Front Royal,VA,"Rt. 522 & 344 North, Front Royal, VA 22630",NS,blue,-78.19344867,38.91713579
+Kansas City,MO,"4800 North Kimball, Kansas City, MO 64161",NS,blue,-94.4295922,39.18292586
