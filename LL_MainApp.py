@@ -9,6 +9,7 @@ import webbrowser
 from threading import Timer
 
 app = Dash("Living Lab Pilot Study", use_pages=True)
+server = app.server
 
 def open_browser():
     webbrowser.open_new("http://127.0.0.1:{}".format(8050))
@@ -81,5 +82,3 @@ def toggle_navbar(opened):
           "collapsed": {"mobile": not opened, "desktop": not opened},
      }
      return new_navbar
-
-server = app.server
