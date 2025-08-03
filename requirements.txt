@@ -15,7 +15,7 @@ geopy~=2.4.1
 tqdm~=4.65.0
 scikit-learn~=1.2.2
 gunicorn
-dash-mantine-components~=0.12.0
+dash-mantine-components
 dash-iconify~=0.1.2
 dash-extensions~=2.0.4
 gunicorn~=21.2.0
