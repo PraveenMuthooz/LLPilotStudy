@@ -1,7 +1,10 @@
 services:
   - type: web
-    name: LLPilotStudy
+    name: living-lab
     env: python
-    runtime: python-3.11.9
+    plan: free
     buildCommand: pip install --upgrade pip setuptools wheel && pip install -r requirements.txt
-    startCommand: python app.py
+    startCommand: "gunicorn --chdir src app:server"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.8
