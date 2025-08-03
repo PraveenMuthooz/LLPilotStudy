@@ -1,7 +1,6 @@
 import dash
 from dash import dcc, html, Dash
 from dash.dependencies import Input, Output, State
-import dash_bootstrap_components as dbc
 import dash_mantine_components as dmc
 from dash import page_container
 from dash_iconify import DashIconify

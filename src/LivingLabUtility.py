@@ -1,7 +1,6 @@
 import io
 import warnings
 warnings.filterwarnings("ignore")
-import dash_bootstrap_components as dbc
 import dash
 from dash import dcc, html, Dash, Input, Output, State, ctx
 import geojson
@@ -10,7 +9,6 @@ import pandas as pd
 import geopandas as gpd
 import psycopg2
 from joblib import Parallel, delayed
-import time
 import numpy as np
 import plotly.colors as pc
 import dash_leaflet as dl
@@ -23,21 +21,15 @@ import os
 import plotly.graph_objects as go
 from geopy.distance import geodesic
 import random 
-import requests
-import polyline
-import json
 from shapely.ops import nearest_points
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from tqdm import tqdm
 from dash_extensions.javascript import assign, arrow_function
 from sklearn.neighbors import BallTree
-from geopy.distance import great_circle
 import numpy as np
 from sklearn.cluster import DBSCAN
-from sklearn.preprocessing import StandardScaler
 from SQLQueries import *
 import folium
-import networkx as nx
 import dash_mantine_components as dmc
 import pickle
 dmc.add_figure_templates()
