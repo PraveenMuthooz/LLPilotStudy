@@ -23,3 +23,4 @@ setuptools>=68.0
 wheel
 dash-bootstrap-components
 dash-leaflet
+dash-ag-grid
