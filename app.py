@@ -25,7 +25,7 @@ app_shell = dmc.AppShell(
                               id="burger",
                               opened=False,  # Start closed
                           ),
-                          dmc.Title("LIVING LAB PILOT PROJECT", c="olive", size="h1", style = {'marginLeft': 'auto'}),
+                          dmc.Title("LIVING LAB PILOT PROJECT", c="midnightblue", size="h1", style = {'marginLeft': 'auto'}),
                           dmc.Group(
                                 [
                                       dmc.Image(src='./assets/Physical_Internet_Center_GTGold_RGB.png', h=40, flex=0),
@@ -35,8 +35,8 @@ app_shell = dmc.AppShell(
                           ),
                     ],
                     h="100%",
-                    px="md",
-             ), style={"backgroundColor":"lightblue", 'zIndex': 2050}, 
+                    px="xs",
+             ), style={"backgroundColor":"turquoise", 'zIndex': 2050}, 
        ),
        dmc.AppShellNavbar(
              id="navbar",
@@ -51,20 +51,21 @@ app_shell = dmc.AppShell(
                               )
                     for page in dash.page_registry.values()
            ],
-           p="md",
+          p=0,
+          maw=300,
    ),
    dmc.AppShellMain(page_container),
  ],
- header={
+header={
           "height": {"base": 0, "md": 60, "lg": 70},
      },
-     navbar={
-          "width": {"base": 200, "md": 300, "lg": 400},
-          "breakpoint": "sm",  # Set a smaller breakpoint
-          "collapsed": {"mobile": True, "desktop": True},  # Start collapsed
-     },
-     padding="md",
-     id="appshell",
+navbar={
+     "width": {"base": 50, "md": 100, "lg": 300},
+     "breakpoint": "sm",  # Set a smaller breakpoint
+     "collapsed": {"mobile": True, "desktop": True},  # Start collapsed
+},
+padding="xs",
+id="appshell"
 )
 
 app.layout = dmc.MantineProvider(app_shell)
@@ -83,4 +84,5 @@ def toggle_navbar(opened):
      return new_navbar
 
 if __name__ == "__main__":
+     Timer(1, open_browser).start()  # Open browser after 1 second
      app.run(debug=False)

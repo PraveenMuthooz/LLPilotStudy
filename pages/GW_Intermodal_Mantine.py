@@ -249,8 +249,8 @@ TitleHeader = dmc.Title(
     id='im_title',
     order=1,
     ta="center",
-    size="h3",
-    c="darkgreen",
+    size="h2",
+    c="darkslategray",
     mb='xs'
 )
 SummaryButton = dmc.Button(
