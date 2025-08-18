@@ -6,9 +6,11 @@ from dash import page_container
 from dash_iconify import DashIconify
 import webbrowser
 from threading import Timer
+from cache_config import init_cache
 
-app = Dash("Living Lab Pilot Study", use_pages=True)
-server = app.server
+
+app = Dash("Living Lab Pilot Study", use_pages=True, suppress_callback_exceptions=True)
+init_cache(app.server)
 
 def open_browser():
     webbrowser.open_new("http://127.0.0.1:{}".format(8050))

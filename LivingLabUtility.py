@@ -21,10 +21,7 @@ import os
 import plotly.graph_objects as go
 from geopy.distance import geodesic
 import random 
-from shapely.ops import nearest_points
-from concurrent.futures import ProcessPoolExecutor, as_completed
 from tqdm import tqdm
-from dash_extensions.javascript import assign, arrow_function
 from sklearn.neighbors import BallTree
 import numpy as np
 from sklearn.cluster import DBSCAN
@@ -70,7 +67,7 @@ railColorMap = {'NS': 'green'}
 GWColorMap = {'Origin': 'red', 'Destination': 'gold'}
 colorbar_bg_color = "rgba(173, 216, 230, 1)"
 REGION_COLORSCALE = 'OrRd'  #'OrRd' #'blues'
-FLOWLINES_COLORSCALE = 'midnightblue'
+FLOWLINES_COLORSCALE = 'black'
 TRANSLOAD_COLORSCALE = 'purples'
 MAX_TRUCK_PALLETS = 26 # Single floor of 53ft container
 BOX_CAR_PALLETS = 28 # Single floor of 60'9" * 13 * 9'6"
@@ -259,9 +256,7 @@ def write_transload_counties():
     transload_county_df['geoid'] = unique_counties
     
     #TODO: Create a new database table for Counties near HOG and CG Track along with Chatham and Hamilton, TN Counties
-    
-    
-    
+
     # Create and insert the transload counties table
     create_sql_table(transload_counties_table_query)
     insert_chunk(transload_county_df, 'transload_counties')
@@ -318,9 +313,14 @@ def read_transload_layers(transload_gdf):
     
     class1_rail_roads_gdf = gpd.read_file(f'{geojson_file_path}/us_railroads_ns_csx.geojson')
     class1_rail_roads_gdf = class1_rail_roads_gdf[class1_rail_roads_gdf['RROWNER1'] == 'NS']
+    class1_rail_roads_gdf['geometry'] = class1_rail_roads_gdf['geometry'].apply(lambda x: x.simplify(0.05, preserve_topology=True))
     class3_rail_roads_gdf = gpd.read_file(f'{geojson_file_path}/rail_roads_class_3_transload.geojson')
+    class3_rail_roads_gdf['geometry'] = class3_rail_roads_gdf['geometry'].apply(lambda x: x.simplify(0.05, preserve_topology=True))
     
-    return transload_gdf, transload_OD_flows_df, class1_rail_roads_gdf, class3_rail_roads_gdf, transload_county_centroids, se_transload_flows_dict, intermodal_terminals_gdf, LTL_carriers_gdf
+    interstates_gdf = gpd.read_file(f'{geojson_file_path}/roads.geojson')
+    interstates_gdf['geometry'] = interstates_gdf['geometry'].apply(lambda x: x.simplify(0.05, preserve_topology=True))
+    
+    return transload_gdf, transload_OD_flows_df, class1_rail_roads_gdf, class3_rail_roads_gdf, transload_county_centroids, se_transload_flows_dict, intermodal_terminals_gdf, LTL_carriers_gdf, interstates_gdf
 
 # ****************************************************************
 #   DROPDOWN AND SLIDER FUNCTIONS
@@ -333,44 +333,49 @@ def create_mantine_dropdown(title, comp_id, menu_options, initial_val, multi=Fal
     """ 
     Function to create a dropdown menu component using Dash Mantine Components
     """
-    dropdown_component = dmc.Box([
-        dmc.Flex([
-            dmc.Text(
-                title,
-                fw=500,
-                size="sm",
-                c="dark"
-            )
-        ], justify="center", mb="xs"),
+    dropdown_component = dmc.Paper([
         dmc.Select(
             id=comp_id,
+            label=title,
             data=menu_options,
             value=initial_val,
             searchable=True,
             clearable=True,
+            variant='filled',
+            ta='center',
             persistence=persistence,
             size="xs",
-            style={'width': '100%'}
+            style={'width': '100%'},
+            styles = {'input': {'textAlign': 'center', 'justifyContent': 'center', 'backgroundColor': "#d4d1a6"}}
         ) if not multi else dmc.MultiSelect(
             id=comp_id,
+            label=title,
             data=menu_options,
             value=initial_val if isinstance(initial_val, list) else [initial_val] if initial_val else [],
             searchable=True,
             persistence=persistence,
             clearable=True,
+            variant='filled',
+            ta='center',
             size="xs",
             style={
                 'width': '100%',
-                'maxHeight': '40px',
+                'maxHeight': '60px',
                 'overflowY': 'auto',
                 'flex': '0 0 50px',  # Prevent growing, fixed height
             },
             styles={
-                'dropdown': {'zIndex': 2000},
-                'value': {'maxHeight': '32px', 'overflowY': 'auto'}  # Limit selected area height, scroll if overflow
+                'dropdown': {'zIndex': 2000, 'backgroundColor': "#d4d1a6"},
+                'value': {'overflowY': 'auto'}, # Limit selected area height, scroll if overflow,
+                'input': {'textAlign': 'center', 'justifyContent': 'center'}
             }
         )
-    ], style={'width': '100%', 'padding': '4px'})
+    ],
+    p='md',
+    shadow='md',
+    radius='md',
+    withBorder=True                               
+    )
     
     return dropdown_component
     
@@ -381,25 +386,42 @@ def create_mantine_slider(title, comp_id, min_val, max_val, steps, val, label_on
     """ 
     Function to create a slider component using Dash Mantine Components
     """
-    slider_component = dmc.Stack([
-        dmc.Text(title, fw=500, size="sm", ta="center"),
-        dmc.Slider(
-            id=comp_id,
-            min=min_val,
-            max=max_val,
-            step=steps,
-            value=val,
-            labelAlwaysOn=label_on,
-            persistence=persistence,
-            size="sm",
-            marks=[
-                {"value": min_val, "label": f"{min_val}%"},
-                {"value": max_val, "label": f"{max_val}%"}
-            ],
-            style={'width': '90%'}
-        )
-    ], gap="xs", justify="space-between", align="center", style={'width': '100%'}
-        )
+    slider_component = dmc.Paper([
+                                dmc.Flex([
+                                    dmc.Text(title, fw=500, size="xs", ta="center"),
+                                    dmc.Slider(
+                                        id=comp_id,
+                                        min=min_val,
+                                        max=max_val,
+                                        step=steps,
+                                        value=val,
+                                        color='orange',
+                                        labelAlwaysOn=label_on,
+                                        persistence=persistence,
+                                        size="sm",
+                                        w='100%',
+                                        marks=[
+                                            {"value": min_val, "label": f"{min_val}%"},
+                                            {"value": max_val, "label": f"{max_val}%"}
+                                        ],
+                                        styles={
+                                            "mark": {"fontSize": "10px"},
+                                            "markLabel": {"fontSize": "10px", "whiteSpace": "nowrap"}
+                                        }
+                                    )
+                                ],
+                                mt=3,
+                                mb=5,
+                                direction = 'column',
+                                justify="center",
+                                align="center"
+                            )
+                        ],
+                        shadow='md',
+                        radius='md',
+                        p='lg',
+                        withBorder=True
+    )
     
     return slider_component
 
@@ -410,9 +432,11 @@ def create_mantine_input_box(title, comp_id, placeholder, input_type="text", val
     """ 
     Function to create an input box component using Dash Mantine Components
     """
-    input_component = dmc.NumberInput(
+    input_component = dmc.Paper([
+        dmc.NumberInput(
         id=comp_id,
         label=title,
+        ta='center',
         placeholder=placeholder,
         value=value,
         max=maxlength if input_type == "number" else None,
@@ -420,10 +444,16 @@ def create_mantine_input_box(title, comp_id, placeholder, input_type="text", val
     ) if input_type == "number" else dmc.TextInput(
         id=comp_id,
         label=title,
+        ta='center',
         placeholder=placeholder,
         value=value,
         maxLength=maxlength,
         style={'width': '100%'}
+    )],
+    p ='md', 
+    shadow='md',
+    radius='md',
+    withBorder=True
     )
     
     return input_component
@@ -432,12 +462,9 @@ def create_mantine_input_box(title, comp_id, placeholder, input_type="text", val
 #                                                                   DATA
 # ****************************************************************************************************************************************************
 
-# write_transload_counties()
-
 # ---------------------------------
 # SE Region Clusters and Counties
 # ---------------------------------
-# Try to load cached data if available
 cache_file = './assets/Data/se_region_cache.pkl'
 cache_exists = os.path.exists(cache_file)
 if cache_exists:
@@ -450,7 +477,9 @@ if cache_exists:
             SE_county_names,
             county_region_mapping,
             region_county_mapping,
-            gnw_se_counties_df
+            gnw_se_counties_df,
+            SE_regional_hubs_gdf,
+            SE_gateway_hubs_gdf
         ) = pickle.load(f)
 else:
     conn = psycopg2.connect(
@@ -465,6 +494,7 @@ else:
 
     region_cluster_centroids = {row.cluster_id: row.geom.centroid.coords[0] for row in US_SE_region_clusters.itertuples()}
     US_SE_counties = read_county_shapes(US_SE_county_query)
+    US_SE_counties['geom'] = US_SE_counties['geom'].simplify(0.05, preserve_topology=True)
     SE_county_centroids = {row.geoid: row.geom.centroid.coords[0] for row in US_SE_counties.itertuples()}
     SE_county_names = {row.geoid: f"{row.name}, {row.state_name}" for row in US_SE_counties[['geoid', 'name', 'state_name']].drop_duplicates().sort_values(by='state_name').itertuples()}
 
@@ -474,7 +504,16 @@ else:
     for row in county_region_cluster_mapping_df.itertuples():
         if row.geoid not in region_county_mapping[row.cluster_id]:
             region_county_mapping[row.cluster_id].append(row.geoid)
+            
+    SE_regional_hubs_df = pd.read_csv(f'{data_path}/SE_Regional_Hubs.csv')
+    SE_regional_hubs_df = SE_regional_hubs_df.rename(columns={'lon': 'Longitude', 'lat': 'Latitude'})
+    SE_regional_hubs_df['geometry'] = SE_regional_hubs_df.apply(lambda row: Point(row['Longitude'], row['Latitude']), axis=1)
+    SE_regional_hubs_gdf = gpd.GeoDataFrame(SE_regional_hubs_df, geometry='geometry')
 
+    SE_gateway_hubs_df = pd.read_csv(f'{data_path}/SE_Gateway_Hubs.csv')
+    SE_gateway_hubs_df['geometry'] = SE_gateway_hubs_df.apply(lambda row: Point(row['Longitude'], row['Latitude']), axis=1)
+    SE_gateway_hubs_gdf = gpd.GeoDataFrame(SE_gateway_hubs_df, geometry='geometry')
+    
     gnw_se_counties_df = select_data(ll_se_counties_read_query)
     
     # Save to cache
@@ -488,11 +527,12 @@ else:
                 SE_county_names,
                 county_region_mapping,
                 region_county_mapping,
-                gnw_se_counties_df
+                gnw_se_counties_df,
+                SE_regional_hubs_gdf,
+                SE_gateway_hubs_gdf
             ),
             f
         )
-
 
 
 # ---------------------------------
@@ -512,13 +552,15 @@ if transload_cache_exists:
             se_transload_flows_dict,
             intermodal_terminals_gdf,
             LTL_carriers_gdf,
+            interstates_gdf
         ) = pickle.load(f)
 else:
     transload_gdf = read_county_shapes(transload_read_query)
     transload_gdf = transload_gdf[~transload_gdf['geoid'].isin(list(SE_county_centroids.keys()))]
     transload_county_centroids = {row.geoid: row.geom.centroid.coords[0] for row in transload_gdf.itertuples()}
     transload_county_names = {row.geoid: f"{row.name}, {row.state_name}" for row in transload_gdf[['geoid', 'name', 'state_name']].drop_duplicates().sort_values(by='state_name').itertuples()}
-    transload_gdf, transload_OD_flows_df,  primary_RR_gdf, tertiary_RR_gdf, transload_county_centroids, se_transload_flows_dict, intermodal_terminals_gdf, LTL_carriers_gdf = read_transload_layers(transload_gdf)
+    transload_gdf['geom'] = transload_gdf['geom'].simplify(0.05, preserve_topology=True)
+    transload_gdf, transload_OD_flows_df,  primary_RR_gdf, tertiary_RR_gdf, transload_county_centroids, se_transload_flows_dict, intermodal_terminals_gdf, LTL_carriers_gdf, interstates_gdf = read_transload_layers(transload_gdf)
 
     # Save to cache
     with open(transload_cache_file, 'wb') as f:
@@ -533,6 +575,7 @@ else:
                 se_transload_flows_dict,
                 intermodal_terminals_gdf,
                 LTL_carriers_gdf,
+                interstates_gdf
             ),
             f
         )

@@ -54,7 +54,19 @@ window.dashExtensions = Object.assign({}, window.dashExtensions, {
             }
             return style;
         },
-        function3: function(feature, context) {
+        function3: function(feature, layer, context) {
+            layer.bindTooltip(
+                `<table>
+                <tr><th>Name</th><td>${feature.properties.name}</td></tr>
+                <tr><th>State</th><td>${feature.properties.stusab}</td></tr>
+            </table>`, {
+                    permanent: false,
+                    direction: "center",
+                    className: "leaflet-tooltip-top"
+                }
+            );
+        },
+        function4: function(feature, context) {
             const {
                 classes,
                 colorscale,
@@ -78,7 +90,7 @@ window.dashExtensions = Object.assign({}, window.dashExtensions, {
             }
             return style;
         },
-        function4: function(feature, layer, context) {
+        function5: function(feature, layer, context) {
             // Create a table for the selected properties
             let table = '<table style="width:100%">';
             table += '<tr><th colspan="2" style="text-align:center; font-weight:bold;">DESTINATION COUNTY INFO</th></tr>'; // Add a title row
@@ -94,7 +106,7 @@ window.dashExtensions = Object.assign({}, window.dashExtensions, {
                 className: "leaflet-tooltip-top"
             });
         },
-        function5: function(feature, latlng, context) {
+        function6: function(feature, latlng, context) {
             const {
                 colorProp,
                 colorMap,
@@ -113,7 +125,7 @@ window.dashExtensions = Object.assign({}, window.dashExtensions, {
                 icon: icon
             });
         },
-        function6: function(feature, layer, context) {
+        function7: function(feature, layer, context) {
             // Specify the properties you want to display
             let selectedProperties = ['Location', 'ServiceRR']; // Replace with your column names
 
@@ -134,14 +146,42 @@ window.dashExtensions = Object.assign({}, window.dashExtensions, {
                 className: "leaflet-tooltip-top"
             });
         },
-        function7: function(feature, layer, context) {
+        function8: function(feature, latlng, context) {
+            const {
+                colorProp,
+                circleOptions
+            } = context.hideout;
+            return L.circleMarker(latlng, circleOptions);
+        },
+        function9: function(feature, layer, context) {
+            // Specify the properties you want to display
+            let selectedProperties = ['Name', 'State', 'City']; // Replace with your column names
+
+            // Create a table for the selected properties
+            let table = '<table style="width:100%">';
+            table += '<tr><th colspan="2" style="text-align:center; font-weight:bold;">Regional Hub Info</th></tr>'; // Add a title row
+            selectedProperties.forEach(function(property) {
+                if (feature.properties[property]) {
+                    table += `<tr><td><strong><i>${property}</i></strong></td><td> ${feature.properties[property]}</td></tr>`;
+                }
+            });
+            table += '</table>';
+
+            // Bind the tooltip with the table
+            layer.bindTooltip(table, {
+                permanent: false,
+                direction: "center",
+                className: "leaflet-tooltip-top"
+            });
+        },
+        function10: function(feature, layer, context) {
             layer.bindTooltip(`${feature.properties.Company}`, {
                 permanent: false,
                 direction: "center",
                 className: "leaflet-tooltip-top"
             });
         },
-        function8: function(feature, latlng, context) {
+        function11: function(feature, latlng, context) {
                 const {
                     colorProp,
                     colorMap
@@ -161,7 +201,7 @@ window.dashExtensions = Object.assign({}, window.dashExtensions, {
             }
 
             ,
-        function9: function(feature, context) {
+        function12: function(feature, context) {
             const {
                 colorProp,
                 style,
@@ -171,7 +211,7 @@ window.dashExtensions = Object.assign({}, window.dashExtensions, {
             style.color = colorMap[value];
             return style;
         },
-        function10: function(feature, layer, context) {
+        function13: function(feature, layer, context) {
             // Specify the properties you want to display
             let selectedProperties = ['RROWNER1', 'DIVISION', 'MILES']; // Replace with your column names
 
@@ -192,19 +232,19 @@ window.dashExtensions = Object.assign({}, window.dashExtensions, {
                 className: "leaflet-tooltip-top"
             });
         },
-        function11: function(feature, context) {
+        function14: function(feature, context) {
             const {
                 colorProp,
                 style,
                 colorMap
             } = context.hideout;
             value = feature.properties[colorProp];
-            style.color = 'black' //colorMap[value];
+            style.color = 'darkblue' //colorMap[value];
             return style;
         },
-        function12: function(feature, layer, context) {
+        function15: function(feature, layer, context) {
             // Specify the properties you want to display
-            let selectedProperties = ['RROWNER1', 'DIVISION', 'MILES']; // Replace with your column names
+            let selectedProperties = ['RROWNER1', 'MILES']; // Replace with your column names
 
             // Create a table for the selected properties
             let table = '<table style="width:100%">';
@@ -223,7 +263,28 @@ window.dashExtensions = Object.assign({}, window.dashExtensions, {
                 className: "leaflet-tooltip-top"
             });
         },
-        function13: function(feature, context) {
+        function16: function(feature, layer, context) {
+            // Specify the properties you want to display
+            let selectedProperties = ['ROADNUM', 'JURISNAME']; // Replace with your column names
+
+            // Create a table for the selected properties
+            let table = '<table style="width:100%">';
+            table += '<tr><th colspan="2" style="text-align:center; font-weight:bold;">INTERSTATE INFO</th></tr>'; // Add a title row
+            selectedProperties.forEach(function(property) {
+                if (feature.properties[property]) {
+                    table += `<tr><td><strong>${property}</strong></td><td> ${feature.properties[property]}</td></tr>`;
+                }
+            });
+            table += '</table>';
+
+            // Bind the tooltip with the table
+            layer.bindTooltip(table, {
+                permanent: false,
+                direction: "center",
+                className: "leaflet-tooltip-top"
+            });
+        },
+        function17: function(feature, context) {
             const {
                 weightProp,
                 opacityProp,
@@ -233,7 +294,7 @@ window.dashExtensions = Object.assign({}, window.dashExtensions, {
             style.opacity = feature.properties[opacityProp] || 0.8;
             return style;
         },
-        function14: function(feature, layer, context) {
+        function18: function(feature, layer, context) {
             let origin = feature.properties.orig_cnty_name ? feature.properties.orig_cnty_name : `Region ${feature.properties.orig_reg}`;
             let table = '<table style="width:100%">';
             table += '<tr><th colspan="2" style="text-align:center; font-weight:bold;">FLOW LINE INFO</th></tr>'; // Add a title row

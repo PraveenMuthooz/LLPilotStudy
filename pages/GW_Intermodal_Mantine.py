@@ -1,6 +1,7 @@
 import warnings
 warnings.filterwarnings("ignore")
 
+
 import dash
 from dash import dcc, html, callback, clientside_callback
 from dash.dependencies import Input, Output, State
@@ -78,46 +79,54 @@ Truck_capacity_slider = create_mantine_slider(title ='Truck Fill Rate (%)',
                                               persistence = False
                                               )
 
-Boxcar_capacity_input = dmc.NumberInput(
-    id='boxcar-pallet-input',
-    label=dmc.Text('Pallets per Box Car', fw=500, w='100%', size='sm', mb='xs'),
-    placeholder='Input #Boxcar Pallets',
-    min=1,
-    value=BOX_CAR_PALLETS,
-    step=1,
-    size="xs",
-    persistence=True,
-    style={'width': '90%', 'textAlign': 'center'},
-    clampBehavior="strict",  # Prevents going below min
-)
+Boxcar_capacity_input = dmc.Paper([
+    dmc.NumberInput(
+        id='boxcar-pallet-input',
+        label=dmc.Text('Pallets per Box Car', fw=500, w='100%', size='xs'),
+        placeholder='Input #Boxcar Pallets',
+        min=1,
+        value=BOX_CAR_PALLETS,
+        step=1,
+        size="xs",
+        variant='filled',
+        persistence=True,
+        style={'width': '90%', 'textAlign': 'center'},
+        clampBehavior="strict",  # Prevents going below min
+    )
+], p='md', shadow='md', radius='md', withBorder=True)
 
-LTL_percent_input = dmc.NumberInput(
-    id='ltl-percent-input',
-    label=dmc.Text('LTL %', fw=500, w='100%', size='sm', mb='xs'),
-    placeholder='Input LTL %',
+LTL_percent_input = dmc.Paper([
+    dmc.NumberInput(
+        id='ltl-percent-input',
+         label=dmc.Text('LTL%', fw=500, w='100%', size='xs'),
+        placeholder='Input LTL %',
     min=1,
     value=10,
+    variant='filled',
     step=1,
     size="xs",
     persistence=True,
     style={'width': '90%', 'textAlign': 'center'},
     clampBehavior="strict",  # Prevents going below min
 )
+], p='md', shadow='md', radius='md', withBorder=True)
 
 # ******************************************
 #   HEATMAP GRAPH
 # ******************************************
-heatmap_graph = dmc.Stack(
-    [
-        dmc.Title("Origin-Destination Heatmap", order=3, size = 'h4', ta="center", c="black"),
-        dcc.Graph(
-            id='heatmap_graph',
-            style={'height': '70vh', 'width': '100%'}
-        )
-    ],
-    gap=0
-    # style={"marginTop": "1rem"}
-)
+heatmap_graph = dmc.Paper([
+    dmc.Stack(
+        [
+            dmc.Title("Origin-Destination Heatmap", order=3, size = 'h4', ta="center", c="black"),
+            dcc.Graph(
+                id='heatmap_graph',
+                style={'height': '70vh', 'width': '100%'}
+            )
+        ],
+        gap=0
+    )
+], shadow='md', radius='md', p='md', withBorder=True)
+
 # ******************************************
 # COMMODITY PIE CHART 
 # ******************************************
@@ -127,8 +136,14 @@ pie_chart_container = dmc.Container(children=[], id="commodity_flow_container", 
 # TOP COUNTIES BAR GRAPHS
 # ******************************************
 
-im_top_origin_bar_graph = dcc.Graph(figure={}, id='transmodal_origin_bar_graph', style={'height': '32vh'})
-im_top_dest_bar_graph = dcc.Graph(figure={}, id='transmodal_dest_bar_graph', style={'height': '32vh'})
+
+im_top_origin_bar_graph = dmc.Paper([
+    dcc.Graph(figure={}, id='transmodal_origin_bar_graph', style={'height': '32vh'})
+], shadow='md', radius='md', p='md', withBorder=True)
+
+im_top_dest_bar_graph = dmc.Paper([
+    dcc.Graph(figure={}, id='transmodal_dest_bar_graph', style={'height': '32vh'})
+], shadow='md', radius='md', p='md', withBorder=True)
 # im_top_dest_bar_graph = dmc.Container(children=[], id="transmodal_dest_bar_graph_container", fluid=True)
 
 # ************************************************************************************
@@ -136,15 +151,18 @@ im_top_dest_bar_graph = dcc.Graph(figure={}, id='transmodal_dest_bar_graph', sty
 # ************************************************************************************
 
 SE_Regions_Layer.pane = "regions"
+TransloadCountyLayer.pane = "transload-counties" 
 SE_Counties_Layer.pane = "SE-counties"
-TransloadCountyLayer.pane = "counties" 
 SelectedShapeLayer.pane = "selected"
-LTLLayer.pane = "ltl"
+TransloadFlowLayer.pane = "flows"
 PrimaryRailLayer.pane = "primary-rail"
 IntermodalRailLayer.pane = "intermodal-rail"
-TransloadFlowLayer.pane = "flows"
+InterstateLayer.pane = "interstates"    
 TransloadTerminalLayer.pane = "terminals"
+LTLLayer.pane = "ltl"
 RegionBarLayer.pane = "bars"
+GatewayHubLayer.pane = "gateway-hub"
+RegionalHubLayer.pane = "regional-hub"  
 
 transload_county_flows_map = dl.Map(
     center=[33.4574, -82.9071],
@@ -152,22 +170,25 @@ transload_county_flows_map = dl.Map(
     style={
         "width": "100%",
         "height": "65vh", 
-        "border": "1px solid black",
-        "boxShadow": "0 4px 16px rgba(0,0,0,0.2)"
+        'backgroundColor': 'transparent',
+        'border': '0.5px solid black', 
+        'boxShadow': '0 4px 8px rgba(0,0,0,0.4)'
     },
     children=[
         # Define panes with z-index
         dl.Pane(name="regions", style={"zIndex": 200}),
-        dl.Pane(name="SE-counties", style={"zIndex": 410}),
-        dl.Pane(name="counties", style={"zIndex": 300}),
-        dl.Pane(name="selected", style={"zIndex": 400}),
-        dl.Pane(name="primary-rail", style={"zIndex": 500}),
-        dl.Pane(name="intermodal-rail", style={"zIndex": 500}),
+        dl.Pane(name="transload-counties", style={"zIndex": 300}),
+        dl.Pane(name="SE-counties", style={"zIndex": 400}),
+        dl.Pane(name="selected", style={"zIndex": 425}),
         dl.Pane(name="flows", style={"zIndex": 450}),
+        dl.Pane(name="primary-rail", style={"zIndex": 500}),
+        dl.Pane(name="intermodal-rail", style={"zIndex": 550}),
+        dl.Pane(name="interstates", style = {"zIndex":600}),
         dl.Pane(name="terminals", style={"zIndex": 800}),
         dl.Pane(name="ltl", style={"zIndex": 900}),
-        dl.Pane(name="ltl", style={"zIndex": 1000}),
-        
+        dl.Pane(name="gateway-hub", style={"zIndex": 950}),
+        dl.Pane(name="regional-hub", style={"zIndex": 1001}),
+
         # dl.FeatureGroup(
         #     [
         #         dl.EditControl(
@@ -181,19 +202,21 @@ transload_county_flows_map = dl.Map(
         #     pane="selected"
         # ),
 
-        # Your existing LayersControl
         dl.LayersControl(
             children=[
                 dl.BaseLayer(dl.TileLayer(), name="Tile Layer", checked=True),
                 dl.Overlay(SE_Regions_Layer, id="Regions-layer", name="Regions", checked=True),
-                dl.Overlay(SE_Counties_Layer, id="SE-Counties-layer", name="Southeast Counties", checked=True),
+                dl.Overlay(SE_Counties_Layer, id="SE-Counties-layer", name="Southeast Counties", checked=False),
                 dl.Overlay(TransloadCountyLayer, id="County-layer", name="Destination Counties", checked=True),
                 dl.Overlay(SelectedShapeLayer, id="Selected-Shape-layer", name="Selected Region/County", checked=True),
                 dl.Overlay(LTLLayer, id="LTL-layer", name="LTL", checked=False),
                 dl.Overlay(PrimaryRailLayer, id="Primary-Rail-layer", name="Class 1 - RR", checked=True),
-                dl.Overlay(IntermodalRailLayer, id="Tertiary-Rail-layer", name="Class 3 - RR", checked=False),
+                dl.Overlay(IntermodalRailLayer, id="Tertiary-Rail-layer", name="Class 3 - RR", checked=True),
+                dl.Overlay(InterstateLayer, id="Interstate-layer", name="Interstates", checked=True),
                 dl.Overlay(TransloadFlowLayer, id="Flows-layer", name="O-D Flows", checked=True),
-                dl.Overlay(TransloadTerminalLayer, id="Terminal-layer", name="G&W Transload Stations", checked=True),
+                dl.Overlay(TransloadTerminalLayer, id="Terminal-layer", name="G&W Transload Stations", checked=False),
+                dl.Overlay(RegionalHubLayer, id="Region-Hub-layer", name="Regional Hubs", checked=True),
+                dl.Overlay(GatewayHubLayer, id="Gateway-Hub-layer", name="Gateway Hubs", checked=False),
                 dl.Overlay(RegionBarLayer, id="Region-Bar-layer", name="Region Flows Colorbar", checked=True)
             ],
             position="topright"
@@ -298,7 +321,7 @@ MapLegendColumn = dmc.GridCol(
             style={"height": "73vh"},
         )
     ],
-    span=6,
+    span=8,
 )
 
 GraphsColumn = dmc.GridCol([
@@ -307,11 +330,9 @@ GraphsColumn = dmc.GridCol([
                 dmc.Grid([dmc.GridCol(ContainerInfoCardBody, span="auto"), 
                           dmc.GridCol(pie_chart_container, span="auto")
                         ]
-                ),
-                dmc.Grid([dmc.GridCol(im_top_origin_bar_graph, span=6),
-                          dmc.GridCol(im_top_dest_bar_graph, span=6)]),
+                )
             ]),
-        ], span=6)
+        ], span=4)
 
 HeatMapColumn = dmc.GridCol(heatmap_graph, span=6, mt='sm')
 FlowGridColumn = dmc.GridCol([
@@ -321,14 +342,15 @@ FlowGridColumn = dmc.GridCol([
 ], span=6, id='flow-grid-column', h='70vh', mt='sm')
 
 
-layout = dmc.Container([
+layout = dmc.Box([
     dcc.Store(id='shared-data-store', data={}),
     TitleRow,
     OptionsRows,
     dmc.Grid([ MapLegendColumn, GraphsColumn], gutter = 'sm'),
+    dmc.Grid([dmc.GridCol(im_top_origin_bar_graph, span=6), dmc.GridCol(im_top_dest_bar_graph, span=6)]),
     dmc.Grid([HeatMapColumn, FlowGridColumn])
-    ],
-fluid=True)
+    ]
+)
 
 # ************************************************************************************
 #   CALLBACKS

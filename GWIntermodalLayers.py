@@ -10,7 +10,8 @@ import dash_ag_grid as dag
 # ******************************************
 #   SOUTHEAST REGIONS
 # ******************************************
-region_hideout, RegionBarLayer = get_se_region_transload_colorbar(se_regions,'Transload_Flow', REGION_COLORSCALE)
+region_style = dict(weight=0.6, opacity=0.7, color='black', dashArray='1', fillOpacity=0.5)
+region_hideout, RegionBarLayer = get_se_region_transload_colorbar(se_regions,region_style, 'Transload_Flow', REGION_COLORSCALE)
 region_style_handle = assign("""function(feature, context){
     const {classes, colorscale, style, colorProp} = context.hideout;  // get props from hideout
     const value = feature.properties[colorProp];  // get the value that determines the color
@@ -69,19 +70,19 @@ se_county_style_handle = assign("""function(feature, context){
     return style;
 }""")
 
-# regions_tooltip = assign("""function(feature, layer, context){
-#         layer.bindTooltip(
-#             `<table>
-#                 <tr><th>Region</th><td>${feature.properties.cluster}</td></tr>
-#                 <tr><th>Flow (in thou. tons)</th><td>${feature.properties.Transload_Flow}</td></tr>
-#             </table>`,
-#             {permanent: false, direction: "center", className: "leaflet-tooltip-top"}
-#         );
-#     }""")
+se_county_tooltip = assign("""function(feature, layer, context){
+        layer.bindTooltip(
+            `<table>
+                <tr><th>Name</th><td>${feature.properties.name}</td></tr>
+                <tr><th>State</th><td>${feature.properties.stusab}</td></tr>
+            </table>`,
+            {permanent: false, direction: "center", className: "leaflet-tooltip-top"}
+        );
+    }""")
 
-SE_Counties_Layer = dl.GeoJSON(data = US_SE_counties.simplify(tolerance=0.01).__geo_interface__, 
+SE_Counties_Layer = dl.GeoJSON(data = US_SE_counties.__geo_interface__, 
                                 id="SE-counties", 
-                                # onEachFeature=regions_tooltip,
+                                onEachFeature=se_county_tooltip,
                                 style=style)
 
 
@@ -89,7 +90,7 @@ SE_Counties_Layer = dl.GeoJSON(data = US_SE_counties.simplify(tolerance=0.01).__
 #   SELECTED REGION / COUNTY
 # ******************************************
 SelectedShapeLayer = dl.GeoJSON(id="selected_shapes", 
-                                style = dict(weight=1, opacity=1, color='black', fillOpacity=1, fillColor = 'teal')
+                                style = dict(weight=0.5, opacity=0.7, color='black',dashArray=1, fillOpacity=0.8, fillColor = 'cyan')
                                 # zoomToBoundsOnClick=True,
                                 # onEachFeature=regions_tooltip,
                                 # style=region_style_handle,
@@ -205,6 +206,79 @@ TransloadTerminalLayer = dl.GeoJSON(
     hideout = transload_hideout 
 )
 
+# ******************************************
+#        GATEWAY HUB STYLING
+# ******************************************
+gh_point_to_layer = assign("""function(feature, latlng, context){
+    const {colorProp, circleOptions} = context.hideout;
+    return L.circleMarker(latlng, circleOptions);
+}""")
+
+onEachGH = assign("""function(feature, layer, context) {
+    // Specify the properties you want to display
+    let selectedProperties = ['Name', 'State', 'City']; // Replace with your column names
+    
+    // Create a table for the selected properties
+    let table = '<table style="width:100%">';
+    table += '<tr><th colspan="2" style="text-align:center; font-weight:bold;">Regional Hub Info</th></tr>'; // Add a title row
+    selectedProperties.forEach(function(property) {
+        if (feature.properties[property]) {
+        table += `<tr><td><strong><i>${property}</i></strong></td><td> ${feature.properties[property]}</td></tr>`;
+        }
+    });
+    table += '</table>';
+    
+    // Bind the tooltip with the table
+    layer.bindTooltip(table, {permanent: false, direction: "center", className: "leaflet-tooltip-top"});
+    }""")
+gh_hideout =dict(colorProp='color', circleOptions=dict(fillOpacity=1, radius=3, color = 'black', fillColor='springgreen', weight=0.5))
+
+GatewayHubLayer = dl.GeoJSON(
+    data= SE_gateway_hubs_gdf.__geo_interface__,
+    id="regional-hub-geojson",
+    pointToLayer=gh_point_to_layer,  # how to draw points
+    onEachFeature=onEachGH,
+    zoomToBoundsOnClick=False,
+    hideout = gh_hideout
+)
+
+# ******************************************
+#        REGIONAL HUB STYLING
+# ******************************************
+rh_point_to_layer = assign("""function(feature, latlng, context){
+    const {colorProp, circleOptions} = context.hideout;
+    return L.circleMarker(latlng, circleOptions);
+}""")
+
+onEachRH = assign("""function(feature, layer, context) {
+    // Specify the properties you want to display
+    let selectedProperties = ['Name', 'State', 'City']; // Replace with your column names
+    
+    // Create a table for the selected properties
+    let table = '<table style="width:100%">';
+    table += '<tr><th colspan="2" style="text-align:center; font-weight:bold;">Regional Hub Info</th></tr>'; // Add a title row
+    selectedProperties.forEach(function(property) {
+        if (feature.properties[property]) {
+        table += `<tr><td><strong><i>${property}</i></strong></td><td> ${feature.properties[property]}</td></tr>`;
+        }
+    });
+    table += '</table>';
+    
+    // Bind the tooltip with the table
+    layer.bindTooltip(table, {permanent: false, direction: "center", className: "leaflet-tooltip-top"});
+    }""")
+
+rh_hideout =dict(colorProp='color', circleOptions=dict(fillOpacity=1, radius=6, color = 'black', weight=0.5, fillColor='darkmagenta'))
+
+RegionalHubLayer = dl.GeoJSON(
+    data= SE_regional_hubs_gdf.__geo_interface__,
+    id="regional-hub-geojson",
+    pointToLayer=rh_point_to_layer,  # how to draw points
+    onEachFeature=onEachRH,
+    zoomToBoundsOnClick=False,
+    hideout = rh_hideout
+)
+
 
 # ******************************************
 #        LTL CARRIERS STYLING
@@ -268,6 +342,8 @@ onEachClass1RR = assign("""function(feature, layer, context) {
     layer.bindTooltip(table, {permanent: false, direction: "center", className: "leaflet-tooltip-top"});
     }""")
 
+# primary_RR_gdf['geometry'] = primary_RR_gdf['geometry'].simplify(tolerance=0.01)
+# primary_RR_gdf = primary_RR_gdf[['RROWNER1', 'DIVISION', 'MILES', 'geometry']]
 PrimaryRailLayer = dl.GeoJSON(
     data=primary_RR_gdf.__geo_interface__,
     style=prim_rail_style_handle,
@@ -281,17 +357,18 @@ PrimaryRailLayer = dl.GeoJSON(
 # ******************************************
 #   CLASS 3 RAIL ROADS STYLING
 # ******************************************
-ga_rail_style = dict(weight=1.5)
+ga_rail_style = dict(weight=2.5)
 ga_rail_hideout = dict(colorProp='RROWNER1', style=ga_rail_style, colorMap = IMColorMap)
 ga_rail_style_handle = assign("""function(feature, context){
             const {colorProp, style, colorMap} = context.hideout;
             value = feature.properties[colorProp];
-            style.color = 'black' //colorMap[value];
+            style.color = 'darkblue' //colorMap[value];
             return style;
         }""")
+
 onEachClass3RR = assign("""function(feature, layer, context) {
     // Specify the properties you want to display
-    let selectedProperties = ['RROWNER1', 'DIVISION', 'MILES']; // Replace with your column names
+    let selectedProperties = ['RROWNER1', 'MILES']; // Replace with your column names
     
     // Create a table for the selected properties
     let table = '<table style="width:100%">';
@@ -307,14 +384,58 @@ onEachClass3RR = assign("""function(feature, layer, context) {
     layer.bindTooltip(table, {permanent: false, direction: "center", className: "leaflet-tooltip-top"});
     }""")
 
+# tertiary_RR_gdf['geometry'] = tertiary_RR_gdf['geometry'].simplify(tolerance=0.01)
+# tertiary_RR_gdf = tertiary_RR_gdf[['RROWNER1', 'MILES', 'geometry']]
 IntermodalRailLayer = dl.GeoJSON(
-    data=tertiary_RR_gdf.simplify(tolerance=0.001).__geo_interface__,
+    data=tertiary_RR_gdf.__geo_interface__,
     style=ga_rail_style_handle,
     id="tertiary-rail-geojson",
     onEachFeature=onEachClass3RR,
     zoomToBoundsOnClick=False,
     hoverStyle=arrow_function(dict(weight=3, color='#666', dashArray='')),  # style applied on hover
     hideout = ga_rail_hideout
+)
+
+# ******************************************
+#   HIGHWAYS STYLING
+# ******************************************
+interstate_style = dict(weight=1.5, color='darkmagenta')
+interstate_hideout = dict(colorProp='RROWNER1', style=interstate_style, colorMap = IMColorMap)
+# interstate_style_handle = assign("""function(feature, context){
+#             const {colorProp, style, colorMap} = context.hideout;
+#             value = feature.properties[colorProp];
+#             style.color = 'brown' //colorMap[value];
+#             return style;
+#         }""")
+
+onEachIntestate = assign("""function(feature, layer, context) {
+    // Specify the properties you want to display
+    let selectedProperties = ['ROADNUM', 'JURISNAME']; // Replace with your column names
+    
+    // Create a table for the selected properties
+    let table = '<table style="width:100%">';
+    table += '<tr><th colspan="2" style="text-align:center; font-weight:bold;">INTERSTATE INFO</th></tr>'; // Add a title row
+    selectedProperties.forEach(function(property) {
+        if (feature.properties[property]) {
+        table += `<tr><td><strong>${property}</strong></td><td> ${feature.properties[property]}</td></tr>`;
+        }
+    });
+    table += '</table>';
+    
+    // Bind the tooltip with the table
+    layer.bindTooltip(table, {permanent: false, direction: "center", className: "leaflet-tooltip-top"});
+    }""")
+
+# interstates_gdf['geometry'] = interstates_gdf['geometry'].simplify(tolerance=0.01)
+# interstates_gdf = interstates_gdf[['ROADNUM', 'JURISNAME', 'geometry']]
+
+InterstateLayer = dl.GeoJSON(
+    data=interstates_gdf.__geo_interface__,
+    style=interstate_style,
+    id="interstate-geojson",
+    onEachFeature=onEachIntestate,
+    zoomToBoundsOnClick=False,
+    # hideout = interstate_hideout
 )
 
 # ******************************************
@@ -386,7 +507,22 @@ def create_triangle_legend(color, label):
         align="center"
     )
 
-TransloadLegendTable = dmc.Box(
+def create_circle_legend(color, label):
+    return dmc.Group(
+        [
+            DashIconify(
+                icon="ph:circle-fill",  # outline with border
+                width=18,
+                style = {'stroke-width': '10', 'stroke': 'black'},
+                color=color
+            ),
+            dmc.Text(label, size="xs"),
+        ],
+        gap="xs",
+        align="center"
+    )
+
+TransloadLegendTable = dmc.Paper(
     dmc.Group(
         [
             # Class 1 Railroads
@@ -396,23 +532,29 @@ TransloadLegendTable = dmc.Box(
             ],
             
             # Class 3 Railroad
-            create_box_legend("black", "Class 3 - RR"),
+            create_box_legend("darkblue", "Class 3 - RR"),
+            create_box_legend("darkmagenta", "Interstates"),
             # G&W Terminals using triangle icons
             *[
                 create_triangle_legend(GWColorMap[term], f"{term} G&W")
                 for term in GWColorMap
             ],
+            create_circle_legend("springgreen", "Gateway Hubs"),
+            create_circle_legend("darkmagenta", "Regional Hubs")
         ],
         gap="xl",
         pos="right",
         style={"justifyContent": "center", "flexWrap": "wrap", "maxWidth": "100%"},
     ),
     p=0,
+    bd='1px solid black',
+    shadow='md',
+    radius='md',
+    bg='transparent',
+    withBorder=True,
     id="intermodal_legend_table",
     style={
-        "zIndex": 1000,
-        "backgroundColor": "#f5f5f5",
-        "border": "1px solid black"
+        "zIndex": 1000
     }
 )
 

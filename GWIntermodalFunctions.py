@@ -4,7 +4,7 @@ import dash_ag_grid as dag
 # ******************************************
 #   SOUTHEAST REGIONS
 # ******************************************
-def get_se_region_transload_colorbar(se_region_gdf, color_prop = 'Transload_FLow', region_color_scale = 'reds'):
+def get_se_region_transload_colorbar(se_region_gdf, region_style, color_prop = 'Transload_Flow', region_color_scale = 'reds'):
     ############################### COUNTY-FLOW STYLING ########################################
     num_classes = 5
     min_value = se_region_gdf[color_prop].min()
@@ -48,8 +48,7 @@ def get_se_region_transload_colorbar(se_region_gdf, color_prop = 'Transload_FLow
                     }
             )
 
-    style = dict(weight=0.6, opacity=0.7, color='black', dashArray='1', fillOpacity=0.7)
-    region_hideout = dict(colorscale=colorscale, classes=classes, style=style, colorProp=color_prop)
+    region_hideout = dict(colorscale=colorscale, classes=classes, style=region_style, colorProp=color_prop)
 
     return region_hideout, FlowBarLayer
 
@@ -422,23 +421,27 @@ def get_transload_pie_commodity_mantine(OD_flows_df, selected_region, selected_c
     # Calculate percentage for each commodity
     grouped_flows['percent'] = (grouped_flows['tons'] / grouped_flows['tons'].sum()) * 100
 
-    fig = dmc.DonutChart(
-        data=[
-            {
-                "name": f"{grouped_flows['commodity_code'].map(commodity_map).iloc[i]}",
-                "color": color_list[i],
-                "value": grouped_flows['percent'].iloc[i].round(1)
-            }
-            for i in range(len(grouped_flows))
-        ],
-        size=250,
-        thickness=20,
-        chartLabel="Commodity Share (in %)",
-        withLabelsLine=True,
-        withLabels=True,
-        fz='xs',
-        fw='bold',
-        withTooltip=True
+    fig = dmc.Center(
+        dmc.DonutChart(
+            data=[
+                {
+                    "name": f"{grouped_flows['commodity_code'].map(commodity_map).iloc[i]}",
+                    "color": color_list[i],
+                    "value": grouped_flows['percent'].iloc[i].round(1)
+                }
+                for i in range(len(grouped_flows))
+            ],
+            size=270,
+            thickness=20,
+            chartLabel="Commodity Share (%)",
+            withLabelsLine=True,
+            withLabels=True,
+            fz='xs',
+            fw='bold',
+            withTooltip=True,
+            ta="center",
+            style={'justifyContent': 'center'}
+        )
     )
     return fig
 
@@ -549,7 +552,7 @@ def get_flow_grid(row_data):
         id='flows-grid',
         rowData=row_data,
         columnDefs=AgGridColumns,
-        columnSize='autoSizeAll',  # This will size columns based on both header and values
+        # columnSize='autoSizeAll',
         dashGridOptions={
             'pagination': True,
             "columnHoverHighlight": True,

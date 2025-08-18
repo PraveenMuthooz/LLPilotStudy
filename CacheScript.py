@@ -1,12 +1,13 @@
 import warnings
 warnings.filterwarnings("ignore")
-
 import logging
 import pandas as pd 
+from cache_config import cache
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+@cache.memoize(timeout=60*60)
 def filter_flows_with_commodity_optimized(OD_flows_df, selected_region, selected_county, selected_transload_county):
     """Optimized filtering using boolean masks"""
     mask = pd.Series(True, index=OD_flows_df.index)
@@ -25,6 +26,7 @@ def filter_flows_with_commodity_optimized(OD_flows_df, selected_region, selected
     
     return OD_flows_df[mask]
 
+@cache.memoize(timeout=60*60)
 def filter_flows_optimized(OD_flows_df, selected_region, selected_county, selected_transload_county):
     """Optimized filtering using boolean masks"""
     all_OD_col_idx = ['orig_reg', 'orig_cnty', 'orig_cnty_name', 'dest_cnty', 'dest_cnty_name']
@@ -46,7 +48,7 @@ def filter_flows_optimized(OD_flows_df, selected_region, selected_county, select
     
     return OD_flows_df[mask]
 
-
+@cache.memoize(timeout=60*60)
 def filter_flows_region(OD_flows_df, selected_region):
     all_OD_col_idx = ['orig_reg', 'orig_cnty', 'orig_cnty_name', 'dest_cnty', 'dest_cnty_name']
     OD_flows_df = OD_flows_df.groupby(all_OD_col_idx)['tons'].sum().reset_index() 
