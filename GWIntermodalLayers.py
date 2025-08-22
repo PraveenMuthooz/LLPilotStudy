@@ -231,7 +231,7 @@ onEachGH = assign("""function(feature, layer, context) {
     // Bind the tooltip with the table
     layer.bindTooltip(table, {permanent: false, direction: "center", className: "leaflet-tooltip-top"});
     }""")
-gh_hideout =dict(colorProp='color', circleOptions=dict(fillOpacity=1, radius=3, color = 'black', fillColor='springgreen', weight=0.5))
+gh_hideout =dict(colorProp='color', circleOptions=dict(fillOpacity=1, radius=3, color = 'black', fillColor=HubColorMap['Gateway Hub'], weight=0.5))
 
 GatewayHubLayer = dl.GeoJSON(
     data= SE_gateway_hubs_gdf.__geo_interface__,
@@ -268,7 +268,7 @@ onEachRH = assign("""function(feature, layer, context) {
     layer.bindTooltip(table, {permanent: false, direction: "center", className: "leaflet-tooltip-top"});
     }""")
 
-rh_hideout =dict(colorProp='color', circleOptions=dict(fillOpacity=1, radius=6, color = 'black', weight=0.5, fillColor='darkmagenta'))
+rh_hideout =dict(colorProp='color', circleOptions=dict(fillOpacity=1, radius=6, color = 'black', weight=0.5, fillColor=HubColorMap['Regional Hub']))
 
 RegionalHubLayer = dl.GeoJSON(
     data= SE_regional_hubs_gdf.__geo_interface__,
@@ -539,8 +539,10 @@ TransloadLegendTable = dmc.Paper(
                 create_triangle_legend(GWColorMap[term], f"{term} G&W")
                 for term in GWColorMap
             ],
-            create_circle_legend("springgreen", "Gateway Hubs"),
-            create_circle_legend("darkmagenta", "Regional Hubs")
+            *[
+                create_circle_legend(HubColorMap[term], f"{term}")
+                for term in HubColorMap
+            ],
         ],
         gap="xl",
         pos="right",

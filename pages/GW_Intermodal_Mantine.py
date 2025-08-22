@@ -25,6 +25,79 @@ from SQLQueries import *
 from GWIntermodalLayers import *
 import dash_mantine_components as dmc
 from dash_iconify import DashIconify
+from keplergl import KeplerGl
+
+MAPBOX_ACCESS_TOKEN = "pk.eyJ1IjoicHJhdmVlbm0wNyIsImEiOiJjbHVseWhvY3IxN2VtMmtvMWF4MmdheGFtIn0.l_gHE7oX7G5CRxbNkOaZ1g"
+
+dataset = {
+    "points": {
+        "data": [
+            {"lat": 33.75, "lng": -84.39, "name": "ATL"},
+            {"lat": 34.05, "lng": -84.24, "name": "GA"}
+        ],
+        "info": {"label": "points"}
+    }
+}
+
+kepler_config = {
+    "version": "v1",
+    "config": {
+        "visState": {
+            "filters": [],
+            "layers": [
+                {
+                    "id": "point_layer",
+                    "type": "point",
+                    "config": {
+                        "dataId": "points",   # must match dataset["info"]["label"]
+                        "label": "Points",
+                        "color": [255, 0, 0],
+                        "columns": {
+                            "lat": "lat",
+                            "lng": "lng",
+                            "altitude": None
+                        },
+                        "isVisible": True,
+                        "visConfig": {
+                            "radius": 10,
+                            "opacity": 0.8,
+                            "strokeOpacity": 0.8,
+                            "strokeColor": [0, 0, 0],
+                            "thickness": 2,
+                            "filled": True
+                        }
+                    },
+                    "visualChannels": {
+                        "colorField": None,
+                        "colorScale": "quantile",
+                        "sizeField": None,
+                        "sizeScale": "linear"
+                    }
+                }
+            ],
+            "interactionConfig": {
+                "tooltip": {
+                    "fieldsToShow": {
+                        "points": ["name", "lat", "lng"]  # which fields show on hover
+                    },
+                    "enabled": True
+                }
+            },
+            "layerBlending": "normal"
+        },
+        "mapState": {
+            "bearing": 0,
+            "dragRotate": False,
+            "latitude": 33.9,
+            "longitude": -84.4,
+            "pitch": 0,
+            "zoom": 7
+        },
+        "mapStyle": {
+            "styleType": "dark"
+        }
+    }
+}
 
 
 dash.register_page(__name__, path = '/', title="Intermodal Flow", name='Intermodal Flow')
@@ -341,6 +414,22 @@ FlowGridColumn = dmc.GridCol([
         dmc.Box(id='flow-grid-column', style={'height': '70vh', 'width': '100%'}, flex=True)
 ], span=6, id='flow-grid-column', h='70vh', mt='sm')
 
+# KeplerGraphContainer = dmc.Container(
+#     id="kepler-graph-container",
+#     fluid=True,
+#     children=[
+#         dmc.Paper(  # gives a block with explicit height
+#             withBorder=True, p="xs",
+#             style={"height": "82vh"}, 
+#             children=KeplerGl(
+#                 id="kepler-map",
+#                 config = kepler_config,
+#                 height=500, width="100%",
+#                 mapboxApiAccessToken=MAPBOX_ACCESS_TOKEN
+#             )
+#         )
+#     ]
+# )
 
 layout = dmc.Box([
     dcc.Store(id='shared-data-store', data={}),
@@ -349,6 +438,7 @@ layout = dmc.Box([
     dmc.Grid([ MapLegendColumn, GraphsColumn], gutter = 'sm'),
     dmc.Grid([dmc.GridCol(im_top_origin_bar_graph, span=6), dmc.GridCol(im_top_dest_bar_graph, span=6)]),
     dmc.Grid([HeatMapColumn, FlowGridColumn])
+    # KeplerGraphContainer
     ]
 )
 

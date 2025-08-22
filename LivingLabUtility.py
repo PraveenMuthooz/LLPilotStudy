@@ -65,6 +65,7 @@ IMColorMap = { rr: "#{:06x}".format(random.randint(0, 0xFFFFFF)) for rr in railr
 # railColorMap = {'NS': 'green', 'CSXT': 'brown'} #, 'GFRR': 'blue', 'FGA': 'red', 'PVTX': 'purple', 'SAPT': 'brown'}
 railColorMap = {'NS': 'green'}
 GWColorMap = {'Origin': 'red', 'Destination': 'gold'}
+HubColorMap = {'Regional Hub': 'darkmagenta', 'Gateway Hub': 'springgreen'}
 colorbar_bg_color = "rgba(173, 216, 230, 1)"
 REGION_COLORSCALE = 'OrRd'  #'OrRd' #'blues'
 FLOWLINES_COLORSCALE = 'black'
